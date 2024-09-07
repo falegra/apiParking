@@ -49,7 +49,7 @@ export class HelpersService {
 
     try {
       const info_email = await transporter.sendMail({
-        from: `"DDJ 📧" <npccuba@gmail.com>`,
+        from: `"NPC 📧" <npccuba@gmail.com>`,
         to,
         subject,
         text,
