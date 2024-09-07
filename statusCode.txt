@@ -2,6 +2,8 @@
 220 - created user successfully
 221 - verification code successfully verified
 222 - login successfully
+223 - forgot password successfully
+224 - veify forgot password successfully
 
 400
 420 - username already exists
@@ -13,3 +15,6 @@
 426 - error verifying the verification code
 427 - incorrect password
 428 - error login
+429 - you must active your account
+430 - error forgot password
+431 - error verify forgot password

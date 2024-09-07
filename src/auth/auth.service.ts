@@ -6,6 +6,8 @@ import { User } from 'src/user/entities/user.entity';
 import { UserModel } from 'src/user/model/user.model';
 import { VerificationCodeDto } from './dto/verificationCode.dto';
 import { LoginDto } from './dto/login.dto';
+import { ForgotPasswordDto } from './dto/forgotPassword.dto';
+import { VerifyForgotPasswordDto } from './dto/verifyForgotPassword.dto';
 
 @Injectable()
 export class AuthService {
@@ -106,6 +108,10 @@ export class AuthService {
                 return res.sendStatus(424);
             }
 
+            if(!userDb.isActive) {
+                return res.sendStatus(429);
+            }
+
             if(!this.helpersService.verify_password(password, userDb.password)) {
                 return res.sendStatus(427);
             }
@@ -119,6 +125,68 @@ export class AuthService {
         } catch (error) {
             this.handleLog('login', error);
             return res.sendStatus(428);
+        }
+    }
+
+    async forgotPassword(
+        {email}: ForgotPasswordDto,
+        res: Response
+    ) {
+        try {
+            const userDb: User = await this.userModel.getSecureUserByEmail(email);
+
+            if(!userDb) {
+                return res.sendStatus(424);
+            }
+
+            const verificationCode = this.helpersService.generate_activation_code();
+
+            const infoEmail = await this.helpersService.send_email({
+                to: email,
+                subject: 'Verification Code',
+                text: `Your verification code to reset your password is ${verificationCode}`
+            });
+
+            if(infoEmail) {
+                await this.userModel.updateUser(userDb.id, {
+                    verificationCode
+                });
+
+                return res.sendStatus(223);
+            }
+            else {
+                return res.sendStatus(430);
+            }
+        } catch (error) {
+            this.handleLog('forgotPassword', error);
+            return res.sendStatus(430);
+        }
+    }
+
+    async veriryForgotPassword(
+        {email, verificationCode, newPassword}: VerifyForgotPasswordDto,
+        res: Response
+    ) {
+        try {
+            const userDb: User = await this.userModel.getSecureUserByEmail(email);
+
+            if(!userDb) {
+                return res.sendStatus(424);
+            }
+
+            if(userDb.verificationCode !== verificationCode) {
+                return res.sendStatus(425);
+            }
+
+            await this.userModel.updateUser(userDb.id, {
+                verificationCode: null,
+                password: this.helpersService.hash_password(newPassword)
+            });
+
+            return res.sendStatus(224);
+        } catch (error) {
+            this.handleLog('veriryForgotPassword', error);
+            return res.sendStatus(431);
         }
     }
 
