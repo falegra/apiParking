@@ -1,0 +1,15 @@
+200
+220 - created user successfully
+221 - verification code successfully verified
+222 - login successfully
+
+400
+420 - username already exists
+421 - email already exists
+422 - phone already exists
+423 - error creating user
+424 - user not found
+425 - incorrect verification code
+426 - error verifying the verification code
+427 - incorrect password
+428 - error login
