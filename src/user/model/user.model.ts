@@ -169,11 +169,11 @@ export class UserModel {
         {email, lastName, name, password, phone, username}: CreateUserDto
     ) {
         try {
-            const verificationCode = this.helpersService.generate_activation_code();
-            const hashPassword = this.helpersService.hash_password(password);
+            const verificationCode = this.helpersService.generateActivationCode();
+            const hashPassword = this.helpersService.hashPassword(password);
             const createdAt: string = new Date().getTime() + '';
 
-            const infoEmail = await this.helpersService.send_email({
+            const infoEmail = await this.helpersService.sendEmail({
                 to: email,
                 subject: 'Verification Code',
                 text: `Welcome to our platform, your verification code is ${verificationCode}`

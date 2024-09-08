@@ -112,12 +112,11 @@ export class AuthService {
                 return res.sendStatus(429);
             }
 
-            if(!this.helpersService.verify_password(password, userDb.password)) {
+            if(!this.helpersService.verifyPassword(password, userDb.password)) {
                 return res.sendStatus(427);
             }
 
-            const token = this.helpersService.generate_token({
-                id: userDb.id,
+            const token = this.helpersService.generateToken({
                 email: userDb.email,
             }, false);
 
@@ -139,9 +138,9 @@ export class AuthService {
                 return res.sendStatus(424);
             }
 
-            const verificationCode = this.helpersService.generate_activation_code();
+            const verificationCode = this.helpersService.generateActivationCode();
 
-            const infoEmail = await this.helpersService.send_email({
+            const infoEmail = await this.helpersService.sendEmail({
                 to: email,
                 subject: 'Verification Code',
                 text: `Your verification code to reset your password is ${verificationCode}`
@@ -180,7 +179,7 @@ export class AuthService {
 
             await this.userModel.updateUser(userDb.id, {
                 verificationCode: null,
-                password: this.helpersService.hash_password(newPassword)
+                password: this.helpersService.hashPassword(newPassword)
             });
 
             return res.sendStatus(224);
