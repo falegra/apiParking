@@ -11,4 +11,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     @IsString()
     @Length(6, 6)
     verificationCode?: string;
+
+    @IsOptional()
+    @IsString()
+    role?: string;
 }

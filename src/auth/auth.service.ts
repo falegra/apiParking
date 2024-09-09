@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { Response } from 'express';
 import { HelpersService } from 'src/helpers/helpers.service';
 import { CreateUserDto } from 'src/user/dto/createUser.dto';
@@ -8,13 +8,44 @@ import { VerificationCodeDto } from './dto/verificationCode.dto';
 import { LoginDto } from './dto/login.dto';
 import { ForgotPasswordDto } from './dto/forgotPassword.dto';
 import { VerifyForgotPasswordDto } from './dto/verifyForgotPassword.dto';
+import { Role } from 'src/common/enum/role.enum';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnApplicationBootstrap {
     constructor(
         private readonly userModel: UserModel,
         private helpersService: HelpersService
     ) {}
+
+    async onApplicationBootstrap() {
+        try {
+            let userDb: User = await this.userModel.getUserByUsername('admin');
+
+            if(!userDb) {
+                const savedUser: User = await this.userModel.createUser({
+                    email: 'admin@parking.cu',
+                    username: 'admin',
+                    name: 'Parking',
+                    lastName: 'Parking',
+                    phone: '55555555',
+                    password: '1231233'
+                });
+
+                await this.userModel.updateUser(savedUser.id, {
+                    verificationCode: null,
+                    isActive: true,
+                    role: Role.ADMIN
+                });
+
+                console.log(`created admin user`);
+            }
+            else {
+                console.log(`admin user already exists`);
+            }
+        } catch (error) {
+            this.handleLog('onApplicationBootstrap', error);
+        }
+    }
 
     async register(
         {email, lastName, name, password, phone, username}: CreateUserDto,

@@ -4,6 +4,9 @@
 222 - login successfully
 223 - forgot password successfully
 224 - veify forgot password successfully
+225 - created place successfully
+226 - getting all places
+227 - getting the place
 
 400
 420 - username already exists
@@ -18,3 +21,7 @@
 429 - you must active your account
 430 - error forgot password
 431 - error verify forgot password
+432 - error creating the place
+433 - error getting all places
+434 - error getting the place
+435 - place no found

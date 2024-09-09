@@ -13,14 +13,6 @@ export class UserModel {
         private readonly helpersService: HelpersService
     ) {}
 
-    private handleLog(
-        description: string,
-        error: any
-    ) {
-        console.log(`[ERROR] - ${description} - user.model.ts`);
-        console.log(error.message);
-    }
-
     async getSecureUserById(
         id: number
     ) {
@@ -34,6 +26,7 @@ export class UserModel {
             return userDb;
         } catch (error) {
             this.handleLog('getSecureUserById', error);
+            throw new Error(error.message);
         }
     }
 
@@ -50,6 +43,7 @@ export class UserModel {
             return userDb;
         } catch (error) {
             this.handleLog('getSecureUserByUsername', error);
+            throw new Error(error.message);
         }
     }
 
@@ -66,6 +60,7 @@ export class UserModel {
             return userDb;
         } catch (error) {
             this.handleLog('getSecureUserByEmail', error);
+            throw new Error(error.message);
         }
     }
 
@@ -82,6 +77,7 @@ export class UserModel {
             return userDb;
         } catch (error) {
             this.handleLog('getSecureUserByPhone', error);
+            throw new Error(error.message);
         }
     }
 
@@ -95,13 +91,16 @@ export class UserModel {
                 }
             });
 
-            delete userDb.password;
-            delete userDb.createdAt;
-            delete userDb.verificationCode;
+            if(userDb) {
+                delete userDb.password;
+                delete userDb.createdAt;
+                delete userDb.verificationCode;
+            }
 
             return userDb;
         } catch (error) {
             this.handleLog('getUserById', error);
+            throw new Error(error.message);
         }
     }
 
@@ -115,13 +114,16 @@ export class UserModel {
                 }
             });
 
-            delete userDb.password;
-            delete userDb.createdAt;
-            delete userDb.verificationCode;
+            if(userDb) {
+                delete userDb.password;
+                delete userDb.createdAt;
+                delete userDb.verificationCode;
+            }
 
             return userDb;
         } catch (error) {
             this.handleLog('getUserByUsername', error);
+            throw new Error(error.message);
         }
     }
 
@@ -135,13 +137,16 @@ export class UserModel {
                 }
             });
 
-            delete userDb.password;
-            delete userDb.createdAt;
-            delete userDb.verificationCode;
+            if(userDb) {
+                delete userDb.password;
+                delete userDb.createdAt;
+                delete userDb.verificationCode;
+            }
 
             return userDb;
         } catch (error) {
             this.handleLog('getUserByEmail', error);
+            throw new Error(error.message);
         }
     }
 
@@ -155,13 +160,16 @@ export class UserModel {
                 }
             });
 
-            delete userDb.password;
-            delete userDb.createdAt;
-            delete userDb.verificationCode;
+            if(userDb) {
+                delete userDb.password;
+                delete userDb.createdAt;
+                delete userDb.verificationCode;
+            }
 
             return userDb;
         } catch (error) {
             this.handleLog('getUserByPhone', error);
+            throw new Error(error.message);
         }
     }
 
@@ -198,6 +206,7 @@ export class UserModel {
             }
         } catch (error) {
             this.handleLog('createUser', error);
+            throw new Error(error.message);
         }
     }
 
@@ -211,6 +220,22 @@ export class UserModel {
             return updatedUser;
         } catch (error) {
             this.handleLog('updateUser', error);
+            throw new Error(error.message);
         }
+    }
+
+
+
+
+
+
+
+
+    private handleLog(
+        description: string,
+        error: any
+    ) {
+        console.log(`[ERROR] - ${description} - user.model.ts`);
+        console.log(error.message);
     }
 }
