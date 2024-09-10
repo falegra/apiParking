@@ -8,6 +8,11 @@
 226 - getting all places
 227 - getting the place
 228 - deleted place successfully
+229 - created vehicle type successfully
+230 - getting all vehicle type
+231 - getting the vehicle type by id
+232 - updated vehicle type successfully
+233 - deleted vehicle type successfully
 
 400
 420 - username already exists
@@ -27,3 +32,9 @@
 434 - error getting the place
 435 - place no found
 436 - error deleting the place
+437 - error creating vehicle type
+438 - error getting all vehicle type
+439 - vehicle type not found
+440 - error getting the vehicle type
+441 - error updating the vehicle type
+442 - error deleting the vehicle type
