@@ -35,7 +35,7 @@ export class PlaceModel {
         }
     }
 
-    async getOne(
+    async getOneBy(
         id: number
     ) {
         try {
@@ -47,6 +47,18 @@ export class PlaceModel {
             return placeDb;
         } catch (error) {
             this.handleLog('getOne', error);
+            throw new Error(error.message);
+        }
+    }
+
+    async deletePlace(
+        id: number
+    ) {
+        try {
+            await this.placeRepository.delete(id);
+            return true;
+        } catch (error) {
+            this.handleLog('deletePlace', error);
             throw new Error(error.message);
         }
     }

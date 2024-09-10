@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Res, UseGuards } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PlaceService } from './place.service';
 import { CreatePlaceDto } from './dto/createPlace.dto';
@@ -43,5 +43,14 @@ export class PlaceController {
         @Res() res: Response
     ) {
         return this.placeService.getOne(id, res);
+    }
+
+    @Delete('/:id')
+    @UseGuards(AdminGuard)
+    deletePlace(
+        @Param('id', ParseIntPipe) id: number,
+        @Res() res: Response
+    ) {
+        return this.placeService.deletePlace(id, res);
     }
 }

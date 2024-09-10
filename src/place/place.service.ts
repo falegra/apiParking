@@ -44,7 +44,7 @@ export class PlaceService {
         res: Response
     ) {
         try {
-            const placeDb: Place = await this.placeModel.getOne(id);
+            const placeDb: Place = await this.placeModel.getOneBy(id);
 
             if(!placeDb) {
                 return res.sendStatus(435);
@@ -54,6 +54,26 @@ export class PlaceService {
         } catch (error) {
             this.handleLog('getOne', error);
             return res.sendStatus(434);
+        }
+    }
+
+    async deletePlace(
+        id: number,
+        res: Response
+    ) {
+        try {
+            let placeDb: Place = await this.placeModel.getOneBy(id);
+
+            if(!placeDb) {
+                return res.sendStatus(435);
+            }
+
+            await this.placeModel.deletePlace(id);
+
+            return res.sendStatus(228);
+        } catch (error) {
+            this.handleLog('deletePlace', error);
+            return res.sendStatus(436);
         }
     }
 
