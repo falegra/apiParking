@@ -18,6 +18,7 @@
 236 - getting all bookings with empleado role
 237 - check in booking successfully
 238 - check out booking successfully
+239 - updated user info successfully
 
 400
 420 - username already exists
@@ -52,3 +53,4 @@
 449 - error getting all bookings
 450 - error check in booking
 451 - error check out booking
+452 - error updating the user info
