@@ -107,7 +107,7 @@ export class VehicleTypeService {
         description: string,
         error: any
     ){
-        console.log(`[ERROR] - ${description} - auth.service.ts`);
+        console.log(`[ERROR] - ${description} - vehicle-type.service.ts`);
         console.log(error.message);
     }
 }

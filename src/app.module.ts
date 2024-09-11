@@ -11,6 +11,7 @@ import { Place } from './place/entities/place.entity';
 import { BookingModule } from './booking/booking.module';
 import { Booking } from './booking/entities/booking.entity';
 import { VehicleTypeModule } from './vehicle-type/vehicle-type.module';
+import { VehicleType } from './vehicle-type/entities/vehicleType.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { VehicleTypeModule } from './vehicle-type/vehicle-type.module';
       entities: [
         User,
         Place,
-        Booking
+        Booking,
+        VehicleType
       ],
       synchronize: true,
     }),

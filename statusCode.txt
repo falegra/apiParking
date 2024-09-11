@@ -13,6 +13,11 @@
 231 - getting the vehicle type by id
 232 - updated vehicle type successfully
 233 - deleted vehicle type successfully
+234 - created booking successfully
+235 - canceled booking successfully
+236 - getting all bookings with empleado role
+237 - check in booking successfully
+238 - check out booking successfully
 
 400
 420 - username already exists
@@ -38,3 +43,12 @@
 440 - error getting the vehicle type
 441 - error updating the vehicle type
 442 - error deleting the vehicle type
+443 - error creating the booking
+444 - booking with vehicle already exists
+445 - there is no availability
+446 - booking not found
+447 - this booking is not yours
+448 - error cancelling the booking
+449 - error getting all bookings
+450 - error check in booking
+451 - error check out booking

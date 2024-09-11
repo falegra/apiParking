@@ -1,13 +1,20 @@
-import { IsDefined, IsString, Length } from "class-validator";
+import { IsDefined, IsInt, IsString, Length } from "class-validator";
 
 export class CreateBookingDto {
     @IsDefined()
     @IsString()
     @Length(7, 7)
-    vehcileRegistration: string;
+    vehicleRegistration: string;
 
     @IsDefined()
-    vehicleType: string;
+    @IsInt()
+    vehicleType: number;
+
+    @IsDefined()
+    @IsString()
     startTime: string;
+
+    @IsDefined()
+    @IsString()
     endTime: string;
 }
