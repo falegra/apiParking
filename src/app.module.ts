@@ -12,6 +12,7 @@ import { BookingModule } from './booking/booking.module';
 import { Booking } from './booking/entities/booking.entity';
 import { VehicleTypeModule } from './vehicle-type/vehicle-type.module';
 import { VehicleType } from './vehicle-type/entities/vehicleType.entity';
+import { LogsModule } from './logs/logs.module';
 
 @Module({
   imports: [
@@ -37,7 +38,8 @@ import { VehicleType } from './vehicle-type/entities/vehicleType.entity';
     AuthModule,
     PlaceModule,
     BookingModule,
-    VehicleTypeModule
+    VehicleTypeModule,
+    LogsModule
   ],
   controllers: [],
   providers: [],

@@ -9,13 +9,15 @@ import { IActiveUser } from 'src/common/interfaces/activeUser.interface';
 import { User } from 'src/user/entities/user.entity';
 import { UserModel } from 'src/user/model/user.model';
 import { Actions } from 'src/common/enum/actions.enum';
+import { LogsModel } from 'src/logs/model/logs.model';
 
 @Injectable()
 export class BookingService {
     constructor(
         private readonly bookingModel: BookingModel,
         private readonly placeModel: PlaceModel,
-        private readonly userModel: UserModel
+        private readonly userModel: UserModel,
+        private readonly logsModel: LogsModel
     ) {}
 
     async createBooking(
@@ -66,7 +68,7 @@ export class BookingService {
                 endTime
             }, places[0].place, userDb);
 
-            //  TODO: guardar en el historial que se hizo una reserva
+            this.createLog(userDb, bookingDb);
 
             return res.status(234).json({booking: bookingDb});
         } catch (error) {
@@ -82,13 +84,15 @@ export class BookingService {
         res: Response
     ) {
         try {
+            const userDb: User = await this.userModel.getUserByEmail(email);
+
             const bookingDb: Booking = await this.bookingModel.getBookingById(id);
 
             if(!bookingDb) return res.sendStatus(446);
 
             if(bookingDb.user.email !== email) return res.sendStatus(447);
 
-            //  TODO: guardar en el historial que se hizo una cancelacion de la reserva
+            this.createLog(userDb, bookingDb);
 
             await this.bookingModel.deleteBooking(id);
 
@@ -113,14 +117,17 @@ export class BookingService {
 
     async checkIn(
         id: number,
+        { email }: IActiveUser,
         res: Response
     ) {
         try {
+            const userDb: User = await this.userModel.getUserByEmail(email);
+
             const bookingDb: Booking = await this.bookingModel.getBookingById(id);
 
             if(!bookingDb) return res.sendStatus(446);
 
-            // TODO: guardar en el historial que se hizo el check in de una reserva
+            this.createLog(userDb, bookingDb);
 
             await this.bookingModel.updateBooking(id, {
                 status: Actions.VEHICLE_ENTRY
@@ -135,14 +142,17 @@ export class BookingService {
 
     async checkOut(
         id: number,
+        { email }: IActiveUser,
         res: Response
     ) {
         try {
+            const userDb: User = await this.userModel.getUserByEmail(email);
+
             const bookingDb: Booking = await this.bookingModel.getBookingById(id);
 
             if(!bookingDb) return res.sendStatus(446);
 
-            // TODO: guardar en el historial que se hizo el check out de una reserva
+            this.createLog(userDb, bookingDb);
 
             await this.bookingModel.deleteBooking(id);
 
@@ -167,5 +177,41 @@ export class BookingService {
     ){
         console.log(`[ERROR] - ${description} - booking.service.ts`);
         console.log(error.message);
+    }
+
+    private createLog(
+        user: User,
+        bookingDb: Booking
+    ) {
+        try {
+            this.logsModel.create({
+                action: Actions.VEHICLE_EXIT,
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    lastName: user.lastName,
+                    email: user.email,
+                    phone: user.phone,
+                    username: user.username,
+                    role: user.role
+                },
+                booking: {
+                    id: bookingDb.id,
+                    endDate: bookingDb.endDate,
+                    endHours: bookingDb.endHour,
+                    endTime: bookingDb.endTime,
+                    place: bookingDb.place.id,
+                    startDate: bookingDb.startDate,
+                    startHours: bookingDb.startHour,
+                    startTime: bookingDb.startTime,
+                    vehicleRegistration: bookingDb.vehicleRegistration,
+                    vehicleType: bookingDb.vehicleType.id,
+                },
+                createdAt: new Date().getTime() + ''
+            });
+        } catch (error) {
+            this.handleLog('createLog', error);
+            throw new Error(error.message);
+        }
     }
 }

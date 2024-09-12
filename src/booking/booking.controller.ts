@@ -59,9 +59,10 @@ export class BookingController {
     @ApiResponse({status: 450, description: 'error check in booking'})
     checkIn(
         @Param('id', ParseIntPipe) id: number,
+        @ActiveUser() activeUser: IActiveUser,
         @Res() res: Response
     ) {
-        return this.bookingService.checkIn(id, res);
+        return this.bookingService.checkIn(id, activeUser, res);
     }
 
     @Get('/checkOut/:id')
@@ -71,8 +72,9 @@ export class BookingController {
     @ApiResponse({status: 238, description: 'check out booking successfully'})
     checkOut(
         @Param('id', ParseIntPipe) id: number,
+        @ActiveUser() activeUser: IActiveUser,
         @Res() res: Response
     ) {
-        return this.bookingService.checkOut(id, res);
+        return this.bookingService.checkOut(id, activeUser, res);
     }
 }

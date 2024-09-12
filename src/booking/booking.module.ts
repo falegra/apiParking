@@ -8,6 +8,7 @@ import { HelpersModule } from 'src/helpers/helpers.module';
 import { VehicleTypeModule } from 'src/vehicle-type/vehicle-type.module';
 import { BookingModel } from './model/booking.model';
 import { PlaceModule } from 'src/place/place.module';
+import { LogsModule } from 'src/logs/logs.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { PlaceModule } from 'src/place/place.module';
     UserModule,
     HelpersModule,
     VehicleTypeModule,
-    PlaceModule
+    PlaceModule,
+    LogsModule
   ],
   controllers: [BookingController],
   providers: [
