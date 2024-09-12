@@ -6,6 +6,13 @@ import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { User } from './user/entities/user.entity';
+import { PlaceModule } from './place/place.module';
+import { Place } from './place/entities/place.entity';
+import { BookingModule } from './booking/booking.module';
+import { Booking } from './booking/entities/booking.entity';
+import { VehicleTypeModule } from './vehicle-type/vehicle-type.module';
+import { VehicleType } from './vehicle-type/entities/vehicleType.entity';
+import { LogsModule } from './logs/logs.module';
 
 @Module({
   imports: [
@@ -18,14 +25,21 @@ import { User } from './user/entities/user.entity';
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
       entities: [
-        User
+        User,
+        Place,
+        Booking,
+        VehicleType
       ],
       synchronize: true,
     }),
     MongooseModule.forRoot('mongodb://localhost/api_parking'),
     HelpersModule,
     UserModule,
-    AuthModule
+    AuthModule,
+    PlaceModule,
+    BookingModule,
+    VehicleTypeModule,
+    LogsModule
   ],
   controllers: [],
   providers: [],

@@ -6,18 +6,18 @@ import { IDataEmail } from 'src/common/interfaces/dataEmail.interface';
 
 @Injectable()
 export class HelpersService {
-  hash_password(password: string) {
+  hashPassword(password: string) {
     const salt = bcryptjs.genSaltSync();
     const hash = bcryptjs.hashSync(password, salt);
     return hash;
   }
 
-  verify_password(password: string, hash_password: string) {
+  verifyPassword(password: string, hash_password: string) {
     const valid = bcryptjs.compareSync(password, hash_password);
     return valid;
   }
 
-  generate_token(key: any, expire: boolean) {
+  generateToken(key: any, expire: boolean) {
     let token: string;
     if (expire) {
       token = jwt.sign({ key }, process.env.JWT_SECRET, {
@@ -29,16 +29,17 @@ export class HelpersService {
     return token;
   }
 
-  verify_token(token: string) {
+  verifyToken(token: string) {
     try {
       const payload = jwt.verify(token, process.env.JWT_SECRET);
-      return payload;
+      return payload['key'];
     } catch (error) {
+      console.log(`[ERROR] - verifyToken - helpers.service.ts`);
       console.log(error.message);
     }
   }
 
-  async send_email({ subject, text, to }: IDataEmail) {
+  async sendEmail({ subject, text, to }: IDataEmail) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -62,7 +63,7 @@ export class HelpersService {
     }
   }
 
-  generate_activation_code(): string {
+  generateActivationCode(): string {
     let activation_code: number = Math.floor(Math.random() * 9);
 
     while (activation_code === 0) {

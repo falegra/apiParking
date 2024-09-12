@@ -1,5 +1,6 @@
+import { Booking } from "src/booking/entities/booking.entity";
 import { Role } from "src/common/enum/role.enum";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -35,4 +36,7 @@ export class User {
 
     @Column({type: 'varchar', nullable: false})
     createdAt: string;
+
+    @OneToMany(() => Booking, (booking) => booking.user)
+    bookings: Booking[];
 }
