@@ -22,6 +22,18 @@ export class LogsModel {
         }
     }
 
+    async getAll(
+
+    ) {
+        try {
+            const logs = await this.logsModel.find();
+            return logs;
+        } catch (error) {
+            this.handleLog('getAll', error);
+            throw new Error(error.message);
+        }
+    }
+
 
 
 

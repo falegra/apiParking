@@ -32,7 +32,7 @@ export class UserService {
 
 
 
-    handleLog(
+    private handleLog(
         description: string,
         error: any
     ){
