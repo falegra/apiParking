@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Res, UseGuards } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BookingService } from './booking.service';
 import { CreateBookingDto } from './dto/createBooking.dto';
 import { Response } from 'express';
@@ -9,6 +9,7 @@ import { IActiveUser } from 'src/common/interfaces/activeUser.interface';
 import { EmpleadoGuard } from 'src/auth/empleado.guard';
 
 @ApiTags('booking')
+@ApiBearerAuth()
 @Controller('booking')
 export class BookingController {
     constructor(

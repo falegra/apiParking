@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Res, UseGuards } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PlaceService } from './place.service';
 import { CreatePlaceDto } from './dto/createPlace.dto';
 import { AdminGuard } from 'src/auth/admin.guard';
@@ -7,6 +7,7 @@ import { Response } from 'express';
 import { ClienteGuard } from 'src/auth/cliente.guard';
 
 @ApiTags('place')
+@ApiBearerAuth()
 @Controller('place')
 export class PlaceController {
     constructor(

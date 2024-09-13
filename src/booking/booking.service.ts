@@ -68,7 +68,7 @@ export class BookingService {
                 endTime
             }, places[0].place, userDb);
 
-            this.createLog(userDb, bookingDb);
+            this.createLog(userDb, bookingDb, Actions.RESERVED);
 
             return res.status(234).json({booking: bookingDb});
         } catch (error) {
@@ -92,7 +92,7 @@ export class BookingService {
 
             if(bookingDb.user.email !== email) return res.sendStatus(447);
 
-            this.createLog(userDb, bookingDb);
+            this.createLog(userDb, bookingDb, Actions.CANCELED);
 
             await this.bookingModel.deleteBooking(id);
 
@@ -127,7 +127,7 @@ export class BookingService {
 
             if(!bookingDb) return res.sendStatus(446);
 
-            this.createLog(userDb, bookingDb);
+            this.createLog(userDb, bookingDb, Actions.VEHICLE_ENTRY);
 
             await this.bookingModel.updateBooking(id, {
                 status: Actions.VEHICLE_ENTRY
@@ -152,7 +152,7 @@ export class BookingService {
 
             if(!bookingDb) return res.sendStatus(446);
 
-            this.createLog(userDb, bookingDb);
+            this.createLog(userDb, bookingDb, Actions.VEHICLE_EXIT);
 
             await this.bookingModel.deleteBooking(id);
 
@@ -181,11 +181,12 @@ export class BookingService {
 
     private createLog(
         user: User,
-        bookingDb: Booking
+        bookingDb: Booking,
+        action: Actions
     ) {
         try {
             this.logsModel.create({
-                action: Actions.VEHICLE_EXIT,
+                action,
                 user: {
                     id: user.id,
                     name: user.name,
