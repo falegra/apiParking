@@ -3,6 +3,7 @@ import { UserModel } from './model/user.model';
 import { Response } from 'express';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { User } from './entities/user.entity';
+import { Role } from 'src/common/enum/role.enum';
 
 @Injectable()
 export class UserService {
@@ -26,6 +27,24 @@ export class UserService {
         } catch (error) {
             this.handleLog('updateUser', error);
             return res.sendStatus(452);
+        }
+    }
+
+    async changeToEmployee(
+        id: number,
+        res: Response
+    ) {
+        try {
+            const userDb: User = await this.userModel.getSecureUserById(id);
+
+            if(!userDb) return res.sendStatus(424);
+
+            await this.userModel.updateUser(id, {role: Role.EMPLEADO});
+
+            return res.sendStatus(240);
+        } catch (error) {
+            this.handleLog('changeToEmployee', error);
+            return res.sendStatus(453);
         }
     }
 
