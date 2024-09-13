@@ -1,7 +1,11 @@
-import { Actions } from "src/common/enum/actions.enum";
-import { Place } from "src/place/entities/place.entity";
-import { User } from "src/user/entities/user.entity";
-import { VehicleType } from "src/vehicle-type/entities/vehicleType.entity";
+// import { Actions } from "src/common/enum/actions.enum";
+import { Actions } from "../../common/enum/actions.enum";
+// import { Place } from "src/place/entities/place.entity";
+import { Place } from "../../place/entities/place.entity";
+// import { User } from "src/user/entities/user.entity";
+import { User } from "../../user/entities/user.entity";
+// import { VehicleType } from "src/vehicle-type/entities/vehicleType.entity";
+import { VehicleType } from "../../vehicle-type/entities/vehicleType.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()

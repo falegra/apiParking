@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Res, UseGuards } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { VehicleTypeService } from './vehicle-type.service';
 import { CreateVehicleTypeDto } from './dto/createVehicleType.dto';
 import { Response } from 'express';
@@ -8,6 +8,7 @@ import { ClienteGuard } from 'src/auth/cliente.guard';
 import { UpdateVehicleTypeDto } from './dto/updateVehicleType.dto';
 
 @ApiTags('vehicle-type')
+@ApiBearerAuth()
 @Controller('vehicle-type')
 export class VehicleTypeController {
     constructor(

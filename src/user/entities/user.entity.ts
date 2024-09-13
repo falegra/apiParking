@@ -1,5 +1,5 @@
-import { Booking } from "src/booking/entities/booking.entity";
-import { Role } from "src/common/enum/role.enum";
+import { Booking } from "../../booking/entities/booking.entity";
+import { Role } from "../../common/enum/role.enum";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()

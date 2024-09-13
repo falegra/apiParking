@@ -19,6 +19,7 @@
 237 - check in booking successfully
 238 - check out booking successfully
 239 - updated user info successfully
+240 - updated to employee role successfully
 
 400
 420 - username already exists
@@ -54,3 +55,4 @@
 450 - error check in booking
 451 - error check out booking
 452 - error updating the user info
+453 - error changing the role to employee
